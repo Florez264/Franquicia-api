@@ -25,12 +25,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/productos",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/productos",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"productos"
@@ -46,7 +48,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"nombre\": \"Producto 3\"\r\n}\r\n",
+							"raw": "{\r\n  \"nombre\": \"Producto actualizado\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -54,17 +56,19 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/productos/actualizar/1",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/productos/actualizar/2",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"productos",
 								"actualizar",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -77,7 +81,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"stock\": 100\r\n}\r\n",
+							"raw": "{\r\n  \"stock\": 50\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -85,16 +89,18 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/productos/1/stock",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/productos/2/stock",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"productos",
-								"1",
+								"2",
 								"stock"
 							]
 						}
@@ -142,12 +148,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/sucursales",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/sucursales",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"sucursales"
@@ -157,13 +165,13 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "update",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"nombre\": \"Sucursal 4\"\r\n}\r\n",
+							"raw": "{\r\n  \"nombre\": \"Sucursal actualizado\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,12 +179,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/sucursales/actualizar/1",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/sucursales/actualizar/1",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"sucursales",
@@ -199,7 +209,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"nombre\": \"Franquicia 1\"\r\n}\r\n",
+							"raw": "{\r\n  \"nombre\": \"Franquicia 4\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -207,12 +217,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/franquicias/crear",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/franquicias/crear",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"franquicias",
@@ -229,7 +241,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"nombre\": \"Franquicia 3\"\r\n}\r\n",
+							"raw": "{\r\n  \"nombre\": \"Franquicia\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -237,17 +249,19 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/franquicias/actualizar/1",
-							"protocol": "http",
+							"raw": "18.117.121.237:5000/api/franquicias/actualizar/2",
 							"host": [
-								"localhost"
+								"18",
+								"117",
+								"121",
+								"237"
 							],
-							"port": "8080",
+							"port": "5000",
 							"path": [
 								"api",
 								"franquicias",
 								"actualizar",
-								"1"
+								"2"
 							]
 						}
 					},

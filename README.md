@@ -10,7 +10,8 @@ Asegúrate de tener instalados los siguientes componentes antes de intentar ejec
 - **Maven**: Para la gestión de dependencias y empaquetado del proyecto.
 - **Docker y Docker Compose**: Para ejecutar la aplicación y la base de datos en contenedores.
 - **Git**: Para clonar el repositorio.
-
+- **Postman**: Para probar los endpoints de la API.
+  
 ## Instrucciones para ejecutar en local
 
 ### Clonar el repositorio
