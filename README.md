@@ -2,6 +2,21 @@
 
 Esta es una API para gestionar franquicias, sucursales y productos. Proporciona endpoints para crear, modificar y consultar franquicias y sus componentes (sucursales y productos).
 
+## Extras Implementados:
+- **Docker**: Se incluyen archivos `Dockerfile` y `docker-compose.yml` para facilitar la creación y despliegue de contenedores.
+- **Despliegue en la nube**: La API está desplegada en **AWS EC2**, con la base de datos gestionada en **RDS**.
+
+## Tecnologías Utilizadas:
+- Spring Boot
+- MySQL en AWS RDS
+- Docker
+- AWS EC2
+
+## Requisitos
+- Docker
+- Java 17
+- Maven
+
 ## Requisitos
 
 Asegúrate de tener instalados los siguientes componentes antes de intentar ejecutar la aplicación:
