@@ -1,5 +1,7 @@
 # Franquicia API
 
+Para desplegar en Railway usando MySQL de Clever Cloud, consulta [la guía de despliegue](docs/RAILWAY.md). La configuración versionada está en `railway.json` y la integración continua en `.github/workflows/ci.yml`.
+
 API REST con Java 17, Spring Boot 3.3.4, WebFlux, Reactor y MySQL mediante R2DBC.
 
 ## Ejecutar

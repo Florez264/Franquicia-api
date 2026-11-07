@@ -1,3 +1,7 @@
 .git
 .idea
 target
+.env
+.env.*
+.github
+docs

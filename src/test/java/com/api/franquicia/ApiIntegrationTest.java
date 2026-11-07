@@ -28,6 +28,14 @@ class ApiIntegrationTest {
     @Autowired WebTestClient client;
     @Autowired DatabaseClient db;
 
+    @Test
+    void healthChecksDatabaseWithoutExposingConnectionDetails() {
+        client.get().uri("/api/health").exchange().expectStatus().isOk().expectBody()
+            .jsonPath("$.status").isEqualTo(200)
+            .jsonPath("$.data.state").isEqualTo("UP")
+            .jsonPath("$.data.password").doesNotExist();
+    }
+
     @BeforeEach
     void clean() {
         db.sql("DELETE FROM producto").fetch().rowsUpdated()
