@@ -1,27 +1,17 @@
 package com.api.franquicia.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record Producto(Long id, String nombre, int stock, Long sucursalId) {
+    public Producto {
+        nombre = new Nombre(nombre).valor();
+        if (sucursalId == null || sucursalId <= 0) throw new IllegalArgumentException("La relación padre es obligatoria");
+        if (stock < 0) throw new IllegalArgumentException("El stock no puede ser negativo");
+    }
+    public Producto cambiarNombre(String nuevoNombre) {
+        return new Producto(id, nuevoNombre, stock, sucursalId);
+    }
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Producto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String nombre;
-    private int stock;
+    public Producto cambiarStock(int nuevoStock) {
+        return new Producto(id, nombre, nuevoStock, sucursalId);
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "sucursal_id")
-    private Sucursal sucursal;
 }

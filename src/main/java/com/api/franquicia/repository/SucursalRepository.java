@@ -1,9 +1,12 @@
 package com.api.franquicia.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.api.franquicia.model.*;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
-import com.api.franquicia.model.Sucursal;
+/** Puerto de persistencia: no depende de Spring Data ni de MySQL. */
+public interface SucursalRepository {
+    Mono<Sucursal> findById(Long id);
+    Mono<Sucursal> save(Sucursal recurso);
 
-public interface SucursalRepository extends JpaRepository<Sucursal, Long> {
-    
 }

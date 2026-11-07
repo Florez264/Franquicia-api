@@ -1,31 +1,21 @@
 package com.api.franquicia.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.api.franquicia.model.Franquicia;
+import lombok.RequiredArgsConstructor;
+import com.api.franquicia.model.*;
 import com.api.franquicia.repository.FranquiciaRepository;
-
 import reactor.core.publisher.Mono;
 
-@Service
+@RequiredArgsConstructor
 public class FranquiciaService {
-    
-    @Autowired
-    private FranquiciaRepository franquiciaRepository;
+    private final FranquiciaRepository repository;
 
-     public Mono<Franquicia> crearFranquicia(Franquicia franquicia) {
-        return Mono.just(franquiciaRepository.save(franquicia));
+    public Mono<Franquicia> crearFranquicia(String nombre) {
+        return Mono.defer(() -> repository.save(new Franquicia(null, nombre)));
     }
-
-    public Mono<Void> actualizarFranquicia(Long id, String nuevoNombre) {
-        return Mono.defer(() -> {
-            Franquicia franquicia = franquiciaRepository.findById(id).orElseThrow();
-            franquicia.setNombre(nuevoNombre);
-            franquiciaRepository.save(franquicia);
-            return Mono.empty(); 
-        });
+    public Mono<Franquicia> consultar(Long id) {
+        return repository.findById(id).switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Franquicia")));
     }
-    
-    
+    public Mono<Franquicia> actualizarFranquicia(Long id, String nombre) {
+        return consultar(id).flatMap(value -> repository.save(value.cambiarNombre(nombre)));
+    }
 }

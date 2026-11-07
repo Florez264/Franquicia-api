@@ -1,34 +1,33 @@
 package com.api.franquicia.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.api.franquicia.model.Producto;
+import lombok.RequiredArgsConstructor;
+import com.api.franquicia.model.*;
 import com.api.franquicia.repository.ProductoRepository;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
-@Service
+@RequiredArgsConstructor
 public class ProductoService {
-    
-    @Autowired
-    private ProductoRepository productoRepository;
-
-    public Producto agregarProducto(Producto producto) {
-        return productoRepository.save(producto);
+    private final ProductoRepository repository;
+    private final SucursalService sucursales;
+    private final FranquiciaService franquicias;
+    public Mono<Producto> agregarProducto(String nombre, int stock, Long sucursalId) {
+        return sucursales.consultar(sucursalId)
+            .flatMap(parent -> repository.save(new Producto(null, nombre, stock, parent.id())));
     }
-
-    public void eliminarProducto(Long id) {
-        productoRepository.deleteById(id);
+    public Mono<Producto> consultar(Long id) {
+        return repository.findById(id).switchIfEmpty(Mono.error(new RecursoNoEncontradoException("Producto")));
     }
-
-    public Producto modificarStock(Long id, int nuevoStock) {
-        Producto producto = productoRepository.findById(id).orElseThrow();
-        producto.setStock(nuevoStock);
-        return productoRepository.save(producto);
+    public Mono<Producto> eliminarProducto(Long id) {
+        return consultar(id).flatMap(value -> repository.deleteById(value.id()).thenReturn(value));
     }
-
-    public Producto actualizarNombreProducto(Long id, String nuevoNombre) {
-        Producto producto = productoRepository.findById(id).orElseThrow();
-        producto.setNombre(nuevoNombre);
-        return productoRepository.save(producto);
+    public Mono<Producto> modificarStock(Long id, int stock) {
+        return consultar(id).flatMap(value -> repository.save(value.cambiarStock(stock)));
+    }
+    public Mono<Producto> actualizarNombreProducto(Long id, String nombre) {
+        return consultar(id).flatMap(value -> repository.save(value.cambiarNombre(nombre)));
+    }
+    public Flux<ProductoMayorStock> mayoresPorSucursal(Long franquiciaId) {
+        return franquicias.consultar(franquiciaId).flatMapMany(value -> repository.mayoresPorSucursal(value.id()));
     }
 }

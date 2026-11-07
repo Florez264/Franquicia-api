@@ -1,0 +1,605 @@
+{
+  "info": {
+    "name": "Franquicia API - rutas explicitas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Flujo principal (ejecutar en orden)",
+      "item": [
+        {
+          "name": "01 Crear franquicia",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/franquicias/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Franquicia Centro\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"franquicia_id\", pm.response.json().data.id);",
+                  "pm.test(\"Recurso identificado\", () => { const d = pm.response.json().data; pm.expect(d.id).to.be.a(\"number\"); pm.expect(d.nombre).to.be.a(\"string\"); pm.expect(d.message).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 Crear sucursal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/sucursales/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sucursal Norte\",\n  \"franquicia\": {\n    \"id\": {{franquicia_id}}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"sucursal_id\", pm.response.json().data.id);",
+                  "pm.test(\"Recurso identificado\", () => { const d = pm.response.json().data; pm.expect(d.id).to.be.a(\"number\"); pm.expect(d.nombre).to.be.a(\"string\"); pm.expect(d.message).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/productos/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cafe\",\n  \"stock\": 10,\n  \"sucursal\": {\n    \"id\": {{sucursal_id}}\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"producto_id\", pm.response.json().data.id);",
+                  "pm.test(\"Recurso identificado\", () => { const d = pm.response.json().data; pm.expect(d.id).to.be.a(\"number\"); pm.expect(d.nombre).to.be.a(\"string\"); pm.expect(d.message).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 Crear segundo producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/sucursales/{{sucursal_id}}/productos/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Pan\",\n  \"stock\": 20\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));",
+                  "if (pm.response.code === 201) pm.collectionVariables.set(\"segundo_producto_id\", pm.response.json().data.id);",
+                  "pm.test(\"Recurso identificado\", () => { const d = pm.response.json().data; pm.expect(d.id).to.be.a(\"number\"); pm.expect(d.nombre).to.be.a(\"string\"); pm.expect(d.message).to.be.a(\"string\"); });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 Consultar franquicia",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/franquicias/consultar/{{franquicia_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 Consultar sucursal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/sucursales/consultar/{{sucursal_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "07 Consultar producto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/productos/consultar/{{producto_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "08 Mayor stock por sucursal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/franquicias/consultar-mayor-stock/{{franquicia_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09 Cambiar nombre de franquicia",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/franquicias/actualizar-nombre/{{franquicia_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Franquicia Actualizada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "10 Cambiar nombre de sucursal",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/sucursales/actualizar-nombre/{{sucursal_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sucursal Actualizada\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "11 Cambiar nombre de producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/productos/actualizar-nombre/{{producto_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Cafe Especial\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "12 Cambiar stock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/productos/actualizar-stock/{{producto_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock\": 30\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "13 Mayor stock actualizado",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/franquicias/consultar-mayor-stock/{{franquicia_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "14 Eliminar segundo producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": "{{base_url}}/api/productos/eliminar/{{segundo_producto_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "15 Consultar eliminado (404)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/productos/consultar/{{segundo_producto_id}}"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Alternativas (misma operación, crean recursos adicionales)",
+      "item": [
+        {
+          "name": "Crear sucursal con padre en URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/franquicias/{{franquicia_id}}/sucursales/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Sucursal Sur\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Crear producto con padre en URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/sucursales/{{sucursal_id}}/productos/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Producto Alternativo\",\n  \"stock\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Errores de ejemplo",
+      "item": [
+        {
+          "name": "Nombre vacío",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/franquicias/crear",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Stock negativo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/productos/actualizar-stock/{{producto_id}}",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stock\": -1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Producto inexistente",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/productos/consultar/999999"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));",
+                  "pm.test(\"Estado consistente\", () => pm.expect(pm.response.json().status).to.eql(pm.response.code));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

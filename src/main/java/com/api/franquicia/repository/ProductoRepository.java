@@ -1,9 +1,13 @@
 package com.api.franquicia.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.api.franquicia.model.*;
+import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
-import com.api.franquicia.model.Producto;
-
-public interface ProductoRepository extends JpaRepository<Producto, Long> {
-    
+/** Puerto de persistencia: no depende de Spring Data ni de MySQL. */
+public interface ProductoRepository {
+    Mono<Producto> findById(Long id);
+    Mono<Producto> save(Producto recurso);
+    Mono<Void> deleteById(Long id);
+    Flux<ProductoMayorStock> mayoresPorSucursal(Long franquiciaId);
 }

@@ -1,34 +1,32 @@
-version: '3'
 services:
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     ports:
       - "8080:8080"
-    depends_on:
-      - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/franquicia_db
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: 123
-    networks:
-      - app-network
-
+      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: r2dbc:mysql://db:3306/franquicia_db
+      DB_USER: franquicia
+      DB_PASSWORD: ${DB_PASSWORD:-local-dev-password}
+      DB_INIT_MODE: always
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-local-root-password}
       MYSQL_DATABASE: franquicia_db
+      MYSQL_USER: franquicia
+      MYSQL_PASSWORD: ${DB_PASSWORD:-local-dev-password}
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-    networks:
-      - app-network
-
+    healthcheck:
+      test: ["CMD-SHELL", "MYSQL_PWD=$$MYSQL_PASSWORD mysql -h 127.0.0.1 -u$$MYSQL_USER -D $$MYSQL_DATABASE -e 'SELECT 1'"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
 volumes:
   db_data:
-
-networks:
-  app-network:
