@@ -13,6 +13,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  infrastructure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: terraform
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: '1.13.0'
+      - name: Formato de Terraform
+        run: terraform fmt -check -recursive
+      - name: Inicializar proveedor sin backend
+        run: terraform init -backend=false -input=false -lockfile=readonly
+      - name: Validar infraestructura
+        run: terraform validate
+
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15

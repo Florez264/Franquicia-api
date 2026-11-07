@@ -1,0 +1,411 @@
+{
+  "info": {
+    "_postman_id": "3ee24c9b-0d07-4042-8419-a6ac35279fdd",
+    "name": "FRANQUICIAS-API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43135134"
+  },
+  "item": [
+    {
+      "name": "GET",
+      "item": [
+        {
+          "name": "Consultar la sucursal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/sucursales/consultar/1",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "sucursales",
+                "consultar",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar un producto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/productos/consultar/1",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "consultar",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar el producto con mayor stock por sucursal",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/franquicias/consultar-mayor-stock/1",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "franquicias",
+                "consultar-mayor-stock",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar franquicia",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/franquicias/consultar/1",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "franquicias",
+                "consultar",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "POST",
+      "item": [
+        {
+          "name": "Crear un producto en la sucursal",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Pan\",\r\n    \"stock\": 20\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/sucursales/1/productos/crear",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "sucursales",
+                "1",
+                "productos",
+                "crear"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear una sucursal dentro de la franquicia",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Sucursal Sur\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/franquicias/1/sucursales/crear",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "franquicias",
+                "1",
+                "sucursales",
+                "crear"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear una franquicia",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Franquicia Centro Medellin\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/franquicias/crear",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "franquicias",
+                "crear"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "UPDATE",
+      "item": [
+        {
+          "name": "Actualizar el nombre del producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Cafe Especial\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/productos/actualizar-nombre/1",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "actualizar-nombre",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar stock",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"stock\":30}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://franquicia-api-production-6d5d.up.railway.app/api/productos/actualizar-stock/1",
+              "protocol": "https",
+              "host": [
+                "franquicia-api-production-6d5d",
+                "up",
+                "railway",
+                "app"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "actualizar-stock",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar el nombre de la sucursal",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Sucursal Actualizada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/sucursales/actualizar-nombre/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "sucursales",
+                "actualizar-nombre",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar el nombre de la franquicia",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Franquicia Actualizada\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/franquicias/actualizar-nombre/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "franquicias",
+                "actualizar-nombre",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DELETE",
+      "item": [
+        {
+          "name": "Eliminar un producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/productos/eliminar/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "productos",
+                "eliminar",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

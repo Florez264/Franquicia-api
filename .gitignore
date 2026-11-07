@@ -32,6 +32,14 @@ build/
 ### VS Code ###
 .vscode/
 
+# Estado y credenciales locales de Terraform (el estado puede contener contraseñas)
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+*.tfvars.json
+crash.log
 # Credenciales y herramientas locales
 .env
 .env.*

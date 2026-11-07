@@ -1,5 +1,7 @@
 # Franquicia API
 
+La persistencia se define como código en [terraform/](terraform/README.md), con MySQL DEV de Clever Cloud y un flujo para adoptar la base existente sin duplicarla. La CI valida Terraform sin modificar recursos de nube.
+
 Para desplegar en Railway usando MySQL de Clever Cloud, consulta [la guía de despliegue](docs/RAILWAY.md). La configuración versionada está en `railway.json` y la integración continua en `.github/workflows/ci.yml`.
 
 API REST con Java 17, Spring Boot 3.3.4, WebFlux, Reactor y MySQL mediante R2DBC.
@@ -115,6 +117,6 @@ Se aplica Repository con puertos y adaptadores y una factoría de respuestas. La
 
 La API no guarda estado de negocio en memoria y usa un pool limitado, permitiendo varias instancias con MySQL compartido. Las actualizaciones no incluyen versión optimista: si se necesitan garantías frente a ediciones concurrentes del mismo recurso, debe definirse y añadirse esa política. La consulta de mayor stock no está paginada.
 
-Terraform y nube quedan fuera de esta actualización: no se han validado ni aplicado.
+La API y la base se despliegan por separado. Terraform describe MySQL DEV de Clever Cloud; su adopción autenticada debe completarse siguiendo terraform/README.md. Railway utiliza railway.json para configurar el despliegue.
 
 Lombok `@RequiredArgsConstructor` genera los constructores de inyección de controladores, servicios y adaptadores; `@Slf4j` genera los loggers. Los records del dominio y contratos siguen siendo inmutables y conservan sus constructores de validación.

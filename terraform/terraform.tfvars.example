@@ -1,0 +1,4 @@
+mode                  = "adopt"
+database_service_name = "franquicia-db"
+region                = "mtl"
+existing_mysql_id     = "mysql_REEMPLAZAR_CON_ID_REAL"
